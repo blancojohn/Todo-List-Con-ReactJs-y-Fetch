@@ -1,8 +1,11 @@
 import React from 'react';
+import TodoList from './components/TodoList';
 
 const App = () => {
     return (
-        <h1>REACT APP</h1>
+        <>
+            <TodoList />
+        </>
     )
 }
 
