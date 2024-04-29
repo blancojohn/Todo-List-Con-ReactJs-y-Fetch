@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import CounterTodo from "./CounterTodo"
-import { getUsers } from "../functions";
+import { getUser } from "../functions";
 
 let initialCounter = [0]
 
@@ -16,7 +16,7 @@ const TodoList = () => {
     }, [todos])
 
     useEffect(()=>{
-        getUsers()
+        getUser()
     },[])
 
     return (
