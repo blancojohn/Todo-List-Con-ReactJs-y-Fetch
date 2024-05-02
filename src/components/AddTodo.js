@@ -6,14 +6,16 @@ const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos, lessTodo, setLessTo
 
     const handleKeyEnter = (e) => {
         if (e.keyCode === 13) {
+            const tareApi={
+                label: inputTodo,
+                is_done: false
+            }
             const tarea= [...todos, {
                 label: inputTodo,
                 is_done: false
             }]
-            console.log('tarea antes enviarse a la API', tarea)
             setTodos(tarea)
-            createTodo(tarea)
-            console.log(createTodo(tarea))
+            createTodo(tareApi)
         }
     }
 
