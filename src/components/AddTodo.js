@@ -1,21 +1,24 @@
 import React from "react";
-import { createTodo } from "../functions";
+import { createTodo, getUserAndTask } from "../functions";
 
 
-const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos, lessTodo, setLessTodo }) => {
+const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos/* , lessTodo, setLessTodo */ }) => {
 
-    const handleKeyEnter = (e) => {
-        if (e.keyCode === 13) {
-            const tareApi={
+    const handleKeyEnter = async (e) => {
+        if (e.keyCode === 13 && inputTodo !== '') {
+            const tareApi={ /* objeto que le paso a la función createTodo() */
                 label: inputTodo,
                 is_done: false
             }
-            const tarea= [...todos, {
+            
+            await createTodo(tareApi)
+            const dataApi= await getUserAndTask()
+           /*  const tarea= [...todos, {
                 label: inputTodo,
                 is_done: false
-            }]
-            setTodos(tarea)
-            createTodo(tareApi)
+            }] */
+            
+            setTodos(dataApi)
         }
     }
 
@@ -27,7 +30,7 @@ const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos, lessTodo, setLessTo
             </div>
 
             <div className="container d-flex justify-content-start col-3 bg-light">
-                <ul>
+                {/* <ul>
                     {
                         todos && todos.map((task, index) => (
                             <li key={index}  onMouseOver={() => setLessTodo(true)} onMouseOut={() => setLessTodo(false)}>
@@ -38,6 +41,14 @@ const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos, lessTodo, setLessTo
                                 }}>X</button>)}
                             </li>
                         ))
+                    }
+                </ul> */}
+                <ul>
+                    {
+                        todos && Array.isArray(todos) && todos.length > 0 &&
+                        todos.map(({id, label})=> {
+                           return <li key={id}>{label}</li>
+})
                     }
                 </ul>
             </div>

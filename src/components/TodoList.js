@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import CounterTodo from "./CounterTodo"
-import { createUser } from "../functions";
+import { createUser, getUserAndTask } from "../functions";
 
 let initialCounter = [0]
 
@@ -9,7 +9,11 @@ const TodoList = () => {
     const [inputTodo, setInputTodo] = useState('')
     const [todos, setTodos] = useState([])
     const [numberTodos, setNumberTodos] = useState(initialCounter)
-    const [lessTodo, setLessTodo] = useState(false)
+   /*  const [lessTodo, setLessTodo] = useState(false) */ /* MIENTRAS PRUEBO EL REDERIZADO
+                                                             DE LAS TAREAS SOLICITANDO 
+                                                             DESDE LA API COMENTO EL ESTADO
+                                                             QUE CREA UNA LISTA DE TODO 
+                                                             CON UNO MENOS*/ 
 
 
     useEffect(() => {
@@ -18,6 +22,7 @@ const TodoList = () => {
 
     useEffect(()=>{
         createUser()
+        .then(response=> setTodos(response))
     },[])
 
 return (
@@ -25,7 +30,7 @@ return (
         <div className='container d-flex justify-content-center col-3 mt-5 bg-light'>
             <h1>TODO-LIST</h1>
         </div>
-        <AddTodo setInputTodo={setInputTodo} inputTodo={inputTodo} todos={todos} setTodos={setTodos} lessTodo={lessTodo} setLessTodo={setLessTodo} />
+        <AddTodo setInputTodo={setInputTodo} inputTodo={inputTodo} todos={todos} setTodos={setTodos} /* lessTodo={lessTodo} setLessTodo={setLessTodo}  *//>
         <CounterTodo numberTodos={numberTodos} setNumberTodos={setNumberTodos} />
     </>
 )

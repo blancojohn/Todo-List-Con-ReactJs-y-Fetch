@@ -26,33 +26,19 @@ export const createUser= async ()=>{
         DE LA API*/
         if(data.detail){
             console.log(data.detail) 
-            getUserAndTask()
+            return getUserAndTask()
         }
+        
     }
     catch(detail){
         console.log()
     }
 }
 
-export const getUserAndTask= async ()=>{
-    /* EL FETCH PARA EL SIGUIENTE HOST Y URL ME PERMITE CONSULTAR LOS TODOS DE MI USUARIO */
-    try{
-        const urlUser= 'https://playground.4geeks.com/todo/users/john'
-        const response= await fetch(urlUser)
-        if(response.status >= 200 && response.status <= 299){
-            console.log('Codigo de respuesta:', response.status, 'Solicitud de usuario aprobada')
-        }
-        const data= await response.json()
-        if(data){
-            console.log('Tareas de',data.name, data.todos)
-        }
-    }
-    catch(error){
-        console.log(error.detail)
-    }
-}
 
-export const createTodo= async (tarea)=>{
+export const createTodo= async (tarea)=>{/* El parámetro pasado va a hacer lo que le pase desde el 
+                                            componente AddTodo. El parámetro es la info de las propiedades
+                                            del obejeto para que los datos puedan ser creados en la API */
     try{
         const raw= JSON.stringify(tarea)
         const urlTodo= 'https://playground.4geeks.com/todo/todos/john'
@@ -72,12 +58,52 @@ export const createTodo= async (tarea)=>{
             }
         }
         const data= await response.json()
-        if(data.label){
-            console.log(data.label)
-        }
+        console.log(data)
     }
     catch(detail){
         console.log()
     }
 }
+
+
+export const deleteTodo= async (todo_id)=>{
+    try{
+        const urlIdTodo=  `https://playground.4geeks.com/todo/todos/${todo_id}`
+        const options={
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "Application/json"
+            }
+        }
+        const response= await fetch(urlIdTodo, options)
+        if(response.status){
+            console.log('Codigo de respuetsa:', response.status)
+        }
+    }catch(detail){
+        console.log()
+    }
+}
+
+
+export const getUserAndTask= async ()=>{
+    /* EL FETCH PARA EL SIGUIENTE HOST Y URL ME PERMITE CONSULTAR LOS TODOS DE MI USUARIO */
+    try{
+        const urlUser= 'https://playground.4geeks.com/todo/users/john'
+        const response= await fetch(urlUser)
+        if(response.status >= 200 && response.status <= 299){
+            console.log('Codigo de respuesta:', response.status, 'Solicitud de usuario aprobada')
+        }else{
+            console.log('Solicitud rechazada')
+        }    
+        const data= await response.json()
+        if(data){
+            console.log('Tareas de',data.name, data.todos)
+            return (data.todos)
+        }    
+
+    }    
+    catch(error){
+        console.log(error.detail)
+    }    
+}        
 
