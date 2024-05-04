@@ -1,8 +1,8 @@
 import React from "react";
-import { createTodo, getUserAndTask } from "../functions";
+import { createTodo, getUserAndTask, deleteTodo } from "../functions";
+import { CiTrash } from "react-icons/ci";
 
-
-const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos/* , lessTodo, setLessTodo */ }) => {
+const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos, lessTodo, setLessTodo }) => {
 
     const handleKeyEnter = async (e) => {
         if (e.keyCode === 13 && inputTodo !== '') {
@@ -47,7 +47,11 @@ const AddTodo = ({ inputTodo, setInputTodo, todos, setTodos/* , lessTodo, setLes
                     {
                         todos && Array.isArray(todos) && todos.length > 0 &&
                         todos.map(({id, label})=> {
-                           return <li key={id}>{label}</li>
+                                    return <li key={id} onMouseOver={() => setLessTodo(true)} onMouseOut={() => setLessTodo(false)}>
+                                                {label}{lessTodo && (<button onClick={()=>{
+                                                    deleteTodo(id)
+                                                }}><CiTrash /></button>)}           
+                                           </li>
 })
                     }
                 </ul>

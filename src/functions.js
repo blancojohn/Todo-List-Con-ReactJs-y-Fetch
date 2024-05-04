@@ -78,6 +78,7 @@ export const deleteTodo= async (todo_id)=>{
         const response= await fetch(urlIdTodo, options)
         if(response.status){
             console.log('Codigo de respuetsa:', response.status)
+            return createUser()
         }
     }catch(detail){
         console.log()
