@@ -13,9 +13,9 @@ export const createUser= async ()=>{
         }
         const response= await fetch(urlUser, options)
         if(response.status >= 200 && response.status <= 299){
-            console.log('Codigo de respuesta:', response.status, 'Usuario creado')
+            console.log('Usuario creado')
         }else{
-            console.log('Codigo de respuesta:', response.status, 'Fallo creacion.')
+            console.log(response.status)
         }
         const data= await response.json()
         /* CADA VEZ QUE SE CARGA LA PÁGINA  EL USEEFFECT LLAMA A LA FUNCIÓN CREAR USUARIO. POR LO TANTO,
@@ -25,7 +25,6 @@ export const createUser= async ()=>{
         DE TAL MANERA, SI BORRAN LOS USUARIOS, ASI PODRÉ CREARLO AUTOMATICAMENTE SINO CAMBIAN LAS INSTRUCCIONES
         DE LA API*/
         if(data.detail){
-            console.log(data.detail) 
             return getUserAndTask()
         }
         
@@ -52,15 +51,15 @@ export const createTodo= async (tarea)=>{/* El parámetro pasado va a hacer lo q
         const response= await fetch(urlTodo, options)
         if(response.status){
             if(response.status >= 200 && response.status <= 299){
-                console.log('Codigo Respuesta:', response.status, 'tarea agregada')
+                console.log('Tarea agregada')
             }else{
-                console.log('Codigo de Respuesta:', response.status, 'no se puedo agregar tarea')
+                console.log(response.status)
             }
         }
         const data= await response.json()
         console.log(data)
     }
-    catch(detail){
+    catch(erro){
         console.log()
     }
 }
@@ -76,8 +75,8 @@ export const deleteTodo= async (todo_id)=>{
             }
         }
         const response= await fetch(urlIdTodo, options)
-        if(response.status){
-            console.log('Codigo de respuetsa:', response.status)
+        if(response.status >= 200 && response.status <= 299){
+            console.log('Tarea borrada')
             return createUser()
         }
     }catch(detail){
@@ -86,25 +85,47 @@ export const deleteTodo= async (todo_id)=>{
 }
 
 
+export const deleteAllTodos= async ()=>{/* PARA BORRAR TODAS LAS TAREAS DE UN USUARIO,
+                                           BORRO EL USUASRIO PARA QUE SEGUIDAMENTE SE
+                                           VUELVA A CREAR CON LA RESPECTIVA PROPIEDAD
+                                           DE TODOS VACÍA */
+    try{
+        const urlDeleteUser= 'https://playground.4geeks.com/todo/users/john'
+        const options= {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "Application/json"
+            }
+        }
+        const response= await fetch(urlDeleteUser, options)
+        if(response.status >= 200 && response.status <= 299){
+            console.log('Usuario borrado')
+            return createUser()
+        }else{
+            console.log(response.status)
+        }
+    }catch(detail){
+        console.log()
+    }
+}
+
+
 export const getUserAndTask= async ()=>{
-    /* EL FETCH PARA EL SIGUIENTE HOST Y URL ME PERMITE CONSULTAR LOS TODOS DE MI USUARIO */
+    /* EL FETCH PARA EL SIGUIENTE HOST Y URL ME PERMITE CONSULTAR LOS TODOS DE MI USUARIO
+        QUIZÁ CON EL TIEMPO CAMBIEN LA URL EN LA ACADEMIA */
     try{
         const urlUser= 'https://playground.4geeks.com/todo/users/john'
         const response= await fetch(urlUser)
-        if(response.status >= 200 && response.status <= 299){
-            console.log('Codigo de respuesta:', response.status, 'Solicitud de usuario aprobada')
-        }else{
-            console.log('Solicitud rechazada')
-        }    
         const data= await response.json()
         if(data){
             console.log('Tareas de',data.name, data.todos)
             return (data.todos)
         }    
-
-    }    
-    catch(error){
+    }catch(detail){
         console.log(error.detail)
     }    
-}        
+}     
+          
+
+
 

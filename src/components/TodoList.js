@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import AddTodo from "./AddTodo";
 import CounterTodo from "./CounterTodo"
+import ButtonDeleteTodos from "./ButtonDeleteTodos";
 import { createUser } from "../functions";
 
 
-let initialCounter = [0]
 
 const TodoList = () => {
     const [inputTodo, setInputTodo] = useState('')
     const [todos, setTodos] = useState([])
-    const [numberTodos, setNumberTodos] = useState(initialCounter)
-    const [lessTodo, setLessTodo] = useState(false)  
-
-
-    useEffect(() => {
-        setNumberTodos(todos.length)
-    }, [todos])
+    const [lessTodo, setLessTodo] = useState(false)/* ALMACENA LOS CAMBIOS EN EL RENDERIZADO DEL EVENTO MOUESEOVER Y MOUSEOUT */  
 
     useEffect(()=>{
         createUser()
@@ -28,11 +22,13 @@ return (
             <h1>TODO-LIST</h1>
         </div>
         <AddTodo setInputTodo={setInputTodo} inputTodo={inputTodo} todos={todos} setTodos={setTodos} lessTodo={lessTodo} setLessTodo={setLessTodo} />
-        <CounterTodo numberTodos={numberTodos} setNumberTodos={setNumberTodos} />
+        <CounterTodo todos={todos} />
+        <ButtonDeleteTodos setTodos={setTodos}/>
     </>
 )
 }
 
 export default TodoList
+
 
 
